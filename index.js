@@ -1,4 +1,4 @@
-import { ler } from "./src/aluno.js";
+import { ler, inserir, lerUm, atualizar } from "./src/aluno.js";
 import  express  from "express";
 const app = express();
 const porta = 3000;
@@ -26,13 +26,23 @@ app.get('/alunos', (req, res) =>
 // Rota (endpoint) para exibir um único alunos
 app.get('/alunos/:id', (req, res) => 
 {
-    res.send("Exibindo dados de um aluno");
+    // res.send("Exibindo dados de um aluno");
+
+    const id = parseInt(req.params.id);
+
+    lerUm(id, res);
 });
 
 // Rota (endpoint) para INSERIR alunos
 app.post('/alunos', (req, res) => 
 {
-    res.send("Para inserir aluno");
+    // res.send("Para inserir aluno");
+
+    // Capturando os dados a partir do corpo da requesição
+    const novoAluno = req.body;
+
+    // Executando a função inserir e passsando os parâmetro novoAluno e res.
+    inserir(novoAluno, res);
 });
 
 // Rota (endpoint) para ATUALIZAR todos dados do aluno
@@ -44,7 +54,16 @@ app.put('/alunos/:id', (req, res) =>
 // Rota (endpoint) para ATUALIZAR ALGUNS/todos dados do aluno
 app.patch('/alunos/:id', (req, res) => 
 {
-    res.send("ATUALIZANDO ALGUNS/todos os dadoos de um aluno");
+    //res.send("ATUALIZANDO ALGUNS/todos os dadoos de um aluno");
+
+    // Capturar id
+    const id = parseInt(req.params.id);
+
+    // Dados do aluno
+    const aluno = req.body;
+
+    //Chamando a função ATUALIZAR
+    atualizar(id, aluno, res);
 });
 
 // Rota (endpoint) para EXCLUIR aluno
